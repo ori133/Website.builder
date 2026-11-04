@@ -18,7 +18,7 @@ export default function Header() {
           ))}
         </nav>
         <div className="hidden sm:block">
-          <Button href="/contact">קבלו הצעה</Button>
+          <Button href="/#generator">נסו את המחולל</Button>
         </div>
       </Container>
     </header>
