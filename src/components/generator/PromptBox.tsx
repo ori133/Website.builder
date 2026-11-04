@@ -1,6 +1,7 @@
 "use client";
 
 import type { KeyboardEvent } from "react";
+import Button from "@/components/ui/Button";
 
 const examples = ["אתר תיק עבודות לצלם", "אתר למסעדה איטלקית", "חנות אונליין לתכשיטים", "דף נחיתה לקורס"];
 
@@ -24,8 +25,8 @@ export default function PromptBox({
 
   return (
     <div className="mx-auto w-full max-w-3xl">
-      <div className="rounded-3xl bg-gradient-to-l from-primary via-accent to-primary p-[2px] shadow-2xl shadow-indigo-500/25 prompt-glow">
-        <div className="rounded-[calc(1.5rem-2px)] bg-white p-4 sm:p-5">
+      <div className="animate-glow rounded-panel bg-gradient-to-l from-violet-500 via-neon-pink/70 to-violet-300 p-[1.5px]">
+        <div className="rounded-[calc(var(--radius-panel)-1.5px)] bg-card p-4 sm:p-5">
           <label htmlFor="prompt" className="sr-only">
             תארו את האתר שאתם רוצים
           </label>
@@ -38,31 +39,25 @@ export default function PromptBox({
             onKeyDown={onKeyDown}
             maxLength={500}
             placeholder="תארו את האתר שאתם רוצים… למשל: אתר תיק עבודות לצלם"
-            className="w-full resize-none bg-transparent text-lg leading-relaxed text-foreground placeholder:text-slate-400 focus:outline-none sm:text-xl"
+            className="w-full resize-none bg-transparent text-lg leading-relaxed text-ink placeholder:text-ink-subtle focus:outline-none sm:text-xl"
           />
           <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-            <p className="text-xs text-muted">Enter לשליחה · Shift+Enter לשורה חדשה</p>
-            <button
-              type="button"
-              onClick={onSubmit}
-              disabled={busy || value.trim().length < 3}
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <span aria-hidden="true">✨</span>
+            <p className="text-xs text-ink-subtle">Enter לשליחה · Shift+Enter לשורה חדשה</p>
+            <Button onClick={onSubmit} disabled={busy || value.trim().length < 3}>
               {busy ? "יוצר..." : "צור דמו ב-AI"}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap justify-center gap-2" aria-label="דוגמאות">
+      <div className="mt-5 flex flex-wrap justify-center gap-2" aria-label="דוגמאות">
         {examples.map((ex) => (
           <button
             key={ex}
             type="button"
             disabled={busy}
             onClick={() => onChange(ex)}
-            className="rounded-full border border-slate-300 bg-white/70 px-4 py-1.5 text-sm text-muted transition hover:border-primary hover:text-primary disabled:opacity-50"
+            className="rounded-pill border border-line-strong bg-glass px-4 py-1.5 text-sm text-ink-muted transition hover:border-violet-300 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-200 disabled:opacity-50"
           >
             {ex}
           </button>

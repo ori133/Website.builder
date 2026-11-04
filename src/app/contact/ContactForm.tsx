@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import Button from "@/components/ui/Button";
+import { Field, Input, Textarea } from "@/components/ui/Field";
 
 type Errors = Partial<Record<"name" | "email" | "phone" | "message", string[]>>;
-
-const inputClass =
-  "mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -37,45 +36,33 @@ export default function ContactForm() {
     }
   }
 
-  const field = (name: keyof Errors, label: string, props: React.InputHTMLAttributes<HTMLInputElement> = {}) => (
-    <div>
-      <label htmlFor={name} className="text-sm font-medium">
-        {label}
-      </label>
-      <input id={name} name={name} className={inputClass} aria-invalid={!!errors[name]} {...props} />
-      {errors[name]?.map((m) => (
-        <p key={m} className="mt-1 text-sm text-red-600">
-          {m}
-        </p>
-      ))}
-    </div>
-  );
-
   return (
     <form onSubmit={onSubmit} noValidate className="max-w-xl space-y-5">
-      {field("name", "שם מלא", { required: true, autoComplete: "name" })}
-      {field("email", "אימייל", { type: "email", required: true, autoComplete: "email", dir: "ltr" })}
-      {field("phone", "טלפון (לא חובה)", { type: "tel", autoComplete: "tel", dir: "ltr" })}
-      <div>
-        <label htmlFor="message" className="text-sm font-medium">
-          הודעה
-        </label>
-        <textarea id="message" name="message" rows={5} required className={inputClass} aria-invalid={!!errors.message} />
-        {errors.message?.map((m) => (
-          <p key={m} className="mt-1 text-sm text-red-600">
-            {m}
-          </p>
-        ))}
-      </div>
-      <button
-        type="submit"
-        disabled={status === "sending"}
-        className="rounded-lg bg-primary px-6 py-3 font-medium text-white transition-colors hover:bg-primary-dark disabled:opacity-60"
-      >
+      <Field id="name" label="שם מלא" errors={errors.name}>
+        <Input id="name" name="name" required autoComplete="name" aria-invalid={!!errors.name} />
+      </Field>
+      <Field id="email" label="אימייל" errors={errors.email}>
+        <Input id="email" name="email" type="email" required autoComplete="email" dir="ltr" aria-invalid={!!errors.email} />
+      </Field>
+      <Field id="phone" label="טלפון (לא חובה)" errors={errors.phone}>
+        <Input id="phone" name="phone" type="tel" autoComplete="tel" dir="ltr" aria-invalid={!!errors.phone} />
+      </Field>
+      <Field id="message" label="הודעה" errors={errors.message}>
+        <Textarea id="message" name="message" rows={5} required aria-invalid={!!errors.message} />
+      </Field>
+      <Button type="submit" size="lg" disabled={status === "sending"}>
         {status === "sending" ? "שולח..." : "שלחו הודעה"}
-      </button>
-      {status === "success" && <p role="status" className="text-green-700">תודה! ההודעה נשלחה, נחזור אליכם בקרוב.</p>}
-      {status === "error" && <p role="alert" className="text-red-600">אירעה שגיאה בשליחה. נסו שוב מאוחר יותר.</p>}
+      </Button>
+      {status === "success" && (
+        <p role="status" className="text-success">
+          תודה! ההודעה נשלחה, נחזור אליכם בקרוב.
+        </p>
+      )}
+      {status === "error" && (
+        <p role="alert" className="text-danger">
+          אירעה שגיאה בשליחה. נסו שוב מאוחר יותר.
+        </p>
+      )}
     </form>
   );
 }

@@ -8,7 +8,7 @@ export default function AboutPage() {
   return (
     <>
       <Section title="מי אנחנו">
-        <div className="max-w-2xl space-y-4 text-muted">
+        <div className="max-w-2xl space-y-4 text-ink-muted">
           <p>אנחנו סטודיו קטן ומקצועי שמתמחה בבניית אתרים לעסקים. הגישה שלנו פשוטה: תקשורת ברורה, עיצוב נקי וביצועים מעולים.</p>
           <p>(טקסט זמני — יש להחליף בסיפור האמיתי של העסק.)</p>
         </div>

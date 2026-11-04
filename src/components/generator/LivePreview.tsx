@@ -2,14 +2,14 @@ import type { GeneratedSite } from "@/lib/generator";
 
 function Frame({ url, children }: { url: string; children: React.ReactNode }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl">
-      <div className="flex items-center gap-3 border-b border-slate-200 bg-slate-100 px-4 py-2.5" dir="ltr">
+    <div className="overflow-hidden rounded-panel border border-line-strong bg-white shadow-card">
+      <div className="flex items-center gap-3 border-b border-line bg-surface-2 px-4 py-2.5" dir="ltr">
         <span className="flex gap-1.5" aria-hidden="true">
           <i className="size-3 rounded-full bg-red-400" />
           <i className="size-3 rounded-full bg-amber-400" />
           <i className="size-3 rounded-full bg-green-400" />
         </span>
-        <span className="flex-1 truncate rounded-md bg-white px-3 py-1 text-center text-xs text-slate-500">{url}</span>
+        <span className="flex-1 truncate rounded-md bg-card px-3 py-1 text-center text-xs text-ink-subtle">{url}</span>
       </div>
       {children}
     </div>
@@ -19,7 +19,7 @@ function Frame({ url, children }: { url: string; children: React.ReactNode }) {
 export function PreviewEmpty() {
   return (
     <Frame url="your-site.com">
-      <div className="flex aspect-[16/9] min-h-64 flex-col items-center justify-center gap-2 bg-surface text-center text-muted">
+      <div className="flex aspect-[16/9] min-h-64 flex-col items-center justify-center gap-2 bg-card text-center text-ink-muted">
         <span className="text-4xl" aria-hidden="true">
           🪄
         </span>
@@ -33,7 +33,7 @@ export function PreviewEmpty() {
 export function PreviewLoading({ message }: { message: string }) {
   return (
     <Frame url="building…">
-      <div className="min-h-64 space-y-4 bg-surface p-6" aria-hidden="true">
+      <div className="min-h-64 space-y-4 bg-card p-6" aria-hidden="true">
         <div className="h-8 w-1/3 rounded-lg shimmer" />
         <div className="h-24 rounded-xl shimmer" />
         <div className="grid grid-cols-3 gap-3">
@@ -42,7 +42,7 @@ export function PreviewLoading({ message }: { message: string }) {
           <div className="h-20 rounded-xl shimmer" />
         </div>
       </div>
-      <p role="status" aria-live="polite" className="border-t border-slate-200 bg-white px-4 py-3 text-center text-sm font-medium text-primary">
+      <p role="status" aria-live="polite" className="border-t border-line bg-surface px-4 py-3 text-center text-sm font-medium text-violet-200">
         {message}
       </p>
     </Frame>
