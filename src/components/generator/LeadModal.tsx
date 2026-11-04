@@ -40,7 +40,7 @@ export default function LeadModal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
-          message: `בקשה מהמחולל: "${site.prompt.slice(0, 1500)}" (תבנית: ${site.template.label})`,
+          message: `בקשה מהמחולל: "${site.prompt.slice(0, 1000)}" (תבנית: ${site.template.label})${site.inspirationUrl ? ` | השראה: ${site.inspirationUrl.slice(0, 300)}` : ""}${site.inspired ? " | נוצר Hero בהשראת תמונה שהלקוח בחר" : ""}`,
         }),
       });
       if (res.ok) {

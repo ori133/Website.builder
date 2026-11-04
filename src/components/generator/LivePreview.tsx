@@ -1,4 +1,5 @@
 import type { GeneratedSite } from "@/lib/generator";
+import HeroRenderer from "./HeroRenderer";
 
 function Frame({ url, children }: { url: string; children: React.ReactNode }) {
   return (
@@ -19,7 +20,7 @@ function Frame({ url, children }: { url: string; children: React.ReactNode }) {
 export function PreviewEmpty() {
   return (
     <Frame url="your-site.com">
-      <div className="flex min-h-56 flex-col sm:aspect-[16/9] sm:min-h-64 items-center justify-center gap-2 bg-card text-center text-ink-muted">
+      <div className="flex aspect-[16/9] min-h-64 flex-col items-center justify-center gap-2 bg-card text-center text-ink-muted">
         <span className="text-4xl" aria-hidden="true">
           🪄
         </span>
@@ -49,64 +50,45 @@ export function PreviewLoading({ message }: { message: string }) {
   );
 }
 
-const tileGradients = [
-  "linear-gradient(135deg,#f59e0b,#b45309)",
-  "linear-gradient(135deg,#6366f1,#1e1b4b)",
-  "linear-gradient(135deg,#14b8a6,#134e4a)",
-  "linear-gradient(135deg,#ec4899,#831843)",
-  "linear-gradient(135deg,#64748b,#0f172a)",
-  "linear-gradient(135deg,#84cc16,#365314)",
-];
-
-export function PreviewSite({ site }: { site: GeneratedSite }) {
-  const { template: t, brand } = site;
-  const { bg, fg, accent, soft } = t.palette;
-
+function LockedSections({ site, onUnlock }: { site: GeneratedSite; onUnlock?: () => void }) {
+  const { template: t } = site;
   return (
-    <Frame url={`${brand.replace(/\s+/g, "-")}.co.il`}>
-      <div className="fade-up" style={{ background: bg, color: fg }}>
-        <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-3 text-sm" style={{ background: soft }}>
-          <strong style={{ color: accent }}>{brand}</strong>
-          <nav className="flex flex-wrap gap-x-3 gap-y-1 text-xs opacity-80 sm:gap-4 sm:text-sm">
-            {t.navItems.map((n) => (
-              <span key={n}>{n}</span>
-            ))}
-          </nav>
+    <div className="relative overflow-hidden bg-white text-neutral-900">
+      <div className="pointer-events-none select-none blur-[7px]" aria-hidden="true">
+        <div className="grid gap-4 px-6 py-10 sm:grid-cols-3">
+          {t.blocks.map((b) => (
+            <div key={b.title} className="rounded-xl bg-neutral-100 p-4">
+              <h4 className="font-bold">{b.title}</h4>
+              <p className="mt-1 text-sm opacity-75">{b.text}</p>
+            </div>
+          ))}
         </div>
-
-        <div className="px-5 py-8 text-center sm:px-6 sm:py-14">
-          <h3 className="text-xl font-extrabold sm:text-4xl">{t.headline}</h3>
-          <p className="mx-auto mt-3 max-w-xl opacity-80">{t.subheadline}</p>
-          <span className="mt-6 inline-block rounded-lg px-6 py-2.5 font-semibold text-white" style={{ background: accent }}>
-            {t.cta}
-          </span>
-        </div>
-
-        <div className={`grid gap-3 px-4 pb-8 sm:grid-cols-3 sm:gap-4 sm:px-6 sm:pb-10 ${t.layout === "gallery" ? "grid-cols-2" : ""}`}>
-          {t.layout === "gallery" &&
-            tileGradients.map((g, i) => (
-              <div key={i} className="aspect-[4/3] rounded-xl" style={{ background: g }} aria-hidden="true" />
-            ))}
-
-          {t.layout !== "gallery" &&
-            t.blocks.map((b) => (
-              <div key={b.title} className="rounded-xl p-4" style={{ background: soft }}>
-                {t.layout === "products" && (
-                  <div className="mb-3 aspect-square rounded-lg" style={{ background: `linear-gradient(135deg, ${accent}, ${soft})` }} aria-hidden="true" />
-                )}
-                <div className="flex items-baseline justify-between gap-2">
-                  <h4 className="font-bold">{b.title}</h4>
-                  {b.price && (
-                    <span className="font-bold" style={{ color: accent }}>
-                      {b.price}
-                    </span>
-                  )}
-                </div>
-                <p className="mt-1 text-sm opacity-75">{b.text}</p>
-              </div>
-            ))}
+        <div className="space-y-3 px-6 pb-10">
+          <div className="h-5 w-1/3 rounded bg-neutral-200" />
+          <div className="h-28 rounded-xl bg-neutral-100" />
+          <div className="h-5 w-1/2 rounded bg-neutral-200" />
         </div>
       </div>
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-white/55 p-6 text-center">
+        <span className="text-3xl" aria-hidden="true">🔒</span>
+        <p className="font-display text-lg">שאר האתר נעול בדמו</p>
+        <p className="max-w-sm text-sm text-neutral-600">בשאר העמודים והסקשנים נבנה אתר מלא ומותאם אישית. רוצים להמשיך?</p>
+        {onUnlock && (
+          <button type="button" onClick={onUnlock} className="rounded-full bg-neutral-900 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500">
+            צרו איתנו קשר להמשך
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function PreviewSite({ site, onUnlock }: { site: GeneratedSite; onUnlock?: () => void }) {
+  const { template: t, brand } = site;
+  return (
+    <Frame url={`${brand.replace(/\s+/g, "-")}.co.il`}>
+      <HeroRenderer spec={site.heroSpec} t={t} brand={brand} />
+      <LockedSections site={site} onUnlock={onUnlock} />
     </Frame>
   );
 }

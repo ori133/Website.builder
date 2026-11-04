@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.4.0",
     "@react-three/fiber": "^9.8.2",
     "@types/three": "^0.187.0",
     "cannon-es": "^0.20.0",

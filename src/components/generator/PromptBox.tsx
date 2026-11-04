@@ -44,7 +44,7 @@ export default function PromptBox({
           <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
             <p className="hidden text-xs text-ink-subtle sm:block">Enter לשליחה · Shift+Enter לשורה חדשה</p>
             <Button onClick={onSubmit} disabled={busy || value.trim().length < 3} className="max-sm:w-full max-sm:justify-between">
-              {busy ? "יוצר..." : "צור דמו ב-AI"}
+              {busy ? "יוצר..." : "המשך"}
             </Button>
           </div>
         </div>

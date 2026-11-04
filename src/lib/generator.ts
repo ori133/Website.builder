@@ -1,9 +1,24 @@
+import type { HeroSpec } from "@/lib/heroSpec";
+import { defaultSpec } from "@/lib/heroSpec";
 import { templates, type TemplateDef, type TemplateId } from "@/data/templates";
 
 export type GeneratedSite = {
   template: TemplateDef;
   brand: string;
   prompt: string;
+  heroSpec: HeroSpec;
+  /** True when the hero was derived from a reference image. */
+  inspired: boolean;
+  inspirationUrl?: string;
+};
+
+/** Search phrase for Dribbble (English works best there). */
+export const dribbbleQueries: Record<TemplateId, string> = {
+  portfolio: "photography portfolio website hero",
+  restaurant: "restaurant website hero",
+  store: "ecommerce store website hero",
+  landing: "landing page hero",
+  business: "business website hero",
 };
 
 const order: TemplateId[] = ["portfolio", "restaurant", "store", "landing"];
@@ -25,9 +40,16 @@ export function extractName(prompt: string): string | null {
   return null;
 }
 
-// Deterministic on purpose: no randomness or dates, so it is safe to swap for a real AI call later.
-export function generateSite(prompt: string): GeneratedSite {
+// Deterministic on purpose: no randomness or dates. The AI part (hero from a reference image) is added by the caller.
+export function generateSite(prompt: string, extra?: { heroSpec?: HeroSpec; inspirationUrl?: string }): GeneratedSite {
   const clean = prompt.trim();
   const template = detectTemplate(clean);
-  return { template, brand: extractName(clean) ?? template.defaultBrand, prompt: clean };
+  return {
+    template,
+    brand: extractName(clean) ?? template.defaultBrand,
+    prompt: clean,
+    heroSpec: extra?.heroSpec ?? defaultSpec(template),
+    inspired: !!extra?.heroSpec,
+    inspirationUrl: extra?.inspirationUrl,
+  };
 }
