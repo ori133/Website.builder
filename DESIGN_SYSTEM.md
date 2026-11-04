@@ -1,6 +1,6 @@
 # Design System — Nebula (dark premium / aurora)
 
-Inspired by a Web3 hero reference. Dark by default with a light theme (`<html data-theme="light">`, toggled by `ThemeToggle`, saved in localStorage; tokens remapped in `globals.css`). Live docs: `/design-system`.
+Inspired by a Web3 hero reference. Dark by default with a light theme (`<html data-theme="light">`, toggled by `ThemeToggle`, saved in localStorage; tokens remapped in `globals.css`).
 
 - **Tokens**: `src/app/globals.css` (`@theme`): colors (`bg`, `card`, `violet-*`, `neon-*`, `ink*`, `line*`), radii (`control`, `panel`, `card`, `pill`), type scale (`text-display`, `text-h1`…), shadows, motion. Utilities: `bg-aurora`, `bg-glass`, `text-gradient`.
 - **Fonts**: Rubik (display, Hebrew + Latin) and Assistant (body).

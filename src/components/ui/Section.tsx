@@ -8,14 +8,16 @@ export default function Section({
   subtitle,
   children,
   className,
+  id,
 }: {
   title?: string;
   subtitle?: string;
   children: ReactNode;
   className?: string;
+  id?: string;
 }) {
   return (
-    <section className={cx("reveal py-16 sm:py-24", className)}>
+    <section id={id} className={cx("reveal scroll-mt-20 py-16 sm:py-24", className)}>
       <Container>
         {title && (
           <div className="mb-10 max-w-2xl">

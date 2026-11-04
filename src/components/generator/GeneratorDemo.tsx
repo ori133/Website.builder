@@ -50,6 +50,11 @@ export default function GeneratorDemo() {
         {status === "idle" && <PreviewEmpty />}
         {status === "generating" && <PreviewLoading message={steps[step]} />}
         {status === "done" && site && <PreviewSite site={site} />}
+        {status === "done" && site && (
+          <p className="mt-3 text-center text-sm text-ink-subtle">
+            זו תצוגה מקדימה לדוגמה בלבד. האתר הסופי יעוצב, ייכתב ויותאם אישית לעסק שלכם.
+          </p>
+        )}
       </div>
 
       <LeadModal open={modalOpen} site={site} onClose={() => setModalOpen(false)} />

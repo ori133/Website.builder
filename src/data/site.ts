@@ -6,9 +6,7 @@ export const siteConfig = {
 };
 
 export const navLinks = [
-  { href: "/", label: "בית" },
-  { href: "/services", label: "שירותים" },
-  { href: "/portfolio", label: "תיק עבודות" },
-  { href: "/about", label: "אודות" },
+  { href: "/#how", label: "איך זה עובד" },
+  { href: "/#services", label: "מה אפשר לבנות" },
   { href: "/contact", label: "צור קשר" },
 ];

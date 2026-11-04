@@ -13,7 +13,7 @@ npm run lint
 
 ## מבנה
 
-- `src/app/` — עמודים: בית, `services`, `portfolio`, `about`, `contact`
+- `src/app/` — עמודים: בית (מחולל דמו, איך זה עובד, מה אפשר לבנות) ו-`contact`
 - `src/app/api/contact/route.ts` — קבלת טופס צור קשר (ולידציה עם zod)
 - `src/components/` — `layout/`, `ui/`, `sections/`
 - `src/data/` — תוכן (שירותים, תיק עבודות, ניווט) להחלפה קלה

@@ -19,12 +19,12 @@ export default function Hero() {
           <div className="relative z-10 flex min-h-[34rem] items-center p-6 sm:p-10 lg:min-h-[40rem] lg:p-[var(--spacing-inset)]">
             <div className="relative isolate flex max-w-2xl flex-col items-start gap-6 animate-fade-up">
               <span className="text-scrim" aria-hidden="true" />
-              <Badge tag="חדש">מחולל אתרים מבוסס AI</Badge>
+              <Badge tag="חדש">דמו להמחשת היכולות</Badge>
               <Heading level="display">
                 תארו את האתר שלכם — <GradientText>ה-AI יראה לכם אותו</GradientText> תוך שניות
               </Heading>
               <Text size="lg" className="max-w-md">
-                כתבו במילים שלכם איזה אתר אתם צריכים, וקבלו דמו חי. אהבתם? נהפוך אותו לאתר אמיתי.
+                כתבו איזה אתר אתם צריכים וקבלו דוגמה חיה. זו רק הדגמה של מה שאנחנו יודעים לעשות, והאתר הסופי יעוצב ויותאם אישית עבורכם.
               </Text>
               <Button href="#generator" size="lg" className="mt-4">
                 נסו את המחולל

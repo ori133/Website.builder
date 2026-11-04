@@ -5,7 +5,7 @@ import { services } from "@/data/services";
 
 export default function Services() {
   return (
-    <Section title="השירותים שלנו" subtitle="פתרונות מלאים לעסקים בכל גודל." className="bg-aurora-soft">
+    <Section id="services" title="מה אפשר לבנות" subtitle="הדמו מראה רק טעימה. כך נראים הסוגים השונים של אתרים שאנחנו בונים." className="bg-aurora-soft">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {services.map((s) => (
           <Card key={s.title} className="h-full">

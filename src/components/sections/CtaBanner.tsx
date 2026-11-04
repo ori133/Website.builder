@@ -10,10 +10,10 @@ export default function CtaBanner() {
         <HeroCard>
           <div className="flex flex-col items-start justify-between gap-6 p-8 sm:flex-row sm:items-center sm:p-12">
             <Heading level="h2" className="max-w-xl">
-              מוכנים להקים את האתר הבא שלכם?
+              רוצים את האתר האמיתי? נבנה אותו יחד
             </Heading>
             <Button href="/contact" size="lg">
-              קבלו הצעת מחיר
+              דברו איתנו
             </Button>
           </div>
         </HeroCard>

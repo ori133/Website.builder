@@ -4,13 +4,13 @@ import { Heading, Text } from "@/components/ui/Typography";
 
 const steps = [
   { n: "1", title: "כתבו מה אתם רוצים", text: "משפט אחד מספיק: סוג העסק, הסגנון והמטרה." },
-  { n: "2", title: "ראו דמו בשניות", text: "ה-AI מציג תבנית חיה שמותאמת לבקשה שלכם." },
-  { n: "3", title: "נבנה את זה באמת", text: "משאירים פרטים, ואנחנו הופכים את הדמו לאתר מלא." },
+  { n: "2", title: "ראו דמו בשניות", text: "ה-AI מציג דוגמה חיה שמראה את היכולות שלנו. זו לא הגרסה הסופית." },
+  { n: "3", title: "נבנה את זה באמת", text: "משאירים פרטים, ואנחנו מעצבים ובונים עבורכם אתר מלא ומותאם אישית." },
 ];
 
 export default function HowItWorks() {
   return (
-    <Section title="איך זה עובד" subtitle="מרעיון לאתר חי בשלושה צעדים.">
+    <Section id="how" title="איך זה עובד" subtitle="מדוגמה מהירה לאתר אמיתי בשלושה צעדים.">
       <ol className="grid gap-6 sm:grid-cols-3">
         {steps.map((s) => (
           <li key={s.n}>
