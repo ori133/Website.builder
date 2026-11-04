@@ -5,7 +5,7 @@ import { Heading } from "@/components/ui/Typography";
 
 export default function CtaBanner() {
   return (
-    <section className="pb-16 sm:pb-24">
+    <section className="reveal pb-16 sm:pb-24">
       <Container>
         <HeroCard>
           <div className="flex flex-col items-start justify-between gap-6 p-8 sm:flex-row sm:items-center sm:p-12">

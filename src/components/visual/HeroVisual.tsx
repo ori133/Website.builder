@@ -24,10 +24,10 @@ function hasWebGL() {
 const noopSubscribe = () => () => {};
 
 /**
- * Looping 3D cube cluster. Loads three.js lazily, pauses offscreen,
+ * Physics-driven 3D cluster the cursor can push around. Loads three.js lazily, pauses offscreen,
  * and falls back to a static CSS composition without WebGL / with reduced motion.
  */
-export default function HeroVisual({ className = "", period, spread }: { className?: string; period?: number; spread?: number }) {
+export default function HeroVisual({ className = "" }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const reduce = useSyncExternalStore(subscribeMotion, reducedMotion, () => true);
@@ -44,7 +44,7 @@ export default function HeroVisual({ className = "", period, spread }: { classNa
   const live = webgl && !reduce;
   return (
     <div ref={ref} className={className} aria-hidden="true">
-      {live ? <CubesScene period={period} spread={spread} paused={!visible} /> : <CubesFallback />}
+      {live ? <CubesScene paused={!visible} /> : <CubesFallback />}
     </div>
   );
 }

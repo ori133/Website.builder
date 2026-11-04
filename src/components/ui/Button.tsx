@@ -10,20 +10,23 @@ const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-200";
 
 const base =
-  "group inline-flex items-center justify-center gap-3 rounded-pill font-display font-medium transition duration-200 disabled:pointer-events-none disabled:opacity-50 " +
+  "group inline-flex items-center justify-center gap-3 rounded-pill font-display font-medium transition-all duration-300 ease-[var(--ease-out-soft)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 " +
   focus;
 
 const variants: Record<Variant, string> = {
-  // The white pill with a violet arrow circle — the hero CTA in the reference.
-  primary: "bg-ink text-on-light hover:bg-white hover:shadow-glow-sm active:scale-[0.98]",
-  secondary: "border border-line-strong bg-surface-2 text-ink hover:border-violet-300 hover:bg-surface-2/80",
-  ghost: "text-ink hover:text-violet-200",
+  // White pill + gradient arrow orb — the hero CTA. Glows and sweeps light on hover.
+  primary:
+    "btn-shine bg-gradient-to-b from-white to-violet-50 text-on-light shadow-[0_6px_24px_-6px_rgb(154_103_238/0.65),inset_0_-2px_0_rgb(154_103_238/0.18)] hover:shadow-[0_14px_40px_-8px_rgb(185_130_255/0.9),inset_0_-2px_0_rgb(154_103_238/0.18)]",
+  // Frosted glass with a gradient hairline border.
+  secondary:
+    "btn-outline bg-glass text-ink hover:bg-white/10 hover:shadow-[0_10px_32px_-10px_rgb(154_103_238/0.8)]",
+  ghost: "text-ink-muted hover:text-ink hover:translate-y-0",
 };
 
 const sizes: Record<Variant, Record<Size, string>> = {
-  primary: { md: "h-11 ps-6 pe-1 text-sm", lg: "h-12 ps-7 pe-1.5 text-sm" },
-  secondary: { md: "h-11 px-6 text-sm", lg: "h-12 px-8 text-sm" },
-  ghost: { md: "h-11 px-3 text-sm", lg: "h-12 px-4 text-sm" },
+  primary: { md: "h-12 ps-6 pe-1.5 text-[0.95rem]", lg: "h-14 ps-8 pe-2 text-base" },
+  secondary: { md: "h-11 px-6 text-sm", lg: "h-14 px-9 text-base" },
+  ghost: { md: "h-11 px-3 text-sm", lg: "h-12 px-4 text-base" },
 };
 
 type Common = {
@@ -46,7 +49,7 @@ export default function Button(props: Props) {
     <span
       aria-hidden="true"
       className={cx(
-        "flex aspect-square h-full items-center justify-center rounded-full bg-violet-400 text-white transition-transform duration-200 group-hover:rotate-12",
+        "flex aspect-square h-full items-center justify-center rounded-full bg-gradient-to-br from-violet-300 via-violet-500 to-neon-pink text-white shadow-[0_4px_14px_-2px_rgb(114_57_225/0.8)] transition-transform duration-300 ease-[var(--ease-out-soft)] group-hover:scale-105 group-hover:-rotate-12 [&>svg]:size-[1.1rem]",
       )}
     >
       <ArrowUpEnd />

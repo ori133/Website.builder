@@ -121,7 +121,7 @@ export default function DesignSystemPage() {
           <Text>Body — גוף טקסט רגיל לפסקאות ותיאורים ארוכים יותר.</Text>
           <Text size="sm" tone="subtle">Small / subtle — הערות ומידע משני.</Text>
           <p className="text-sm text-ink-subtle" dir="ltr">
-            Display: Unbounded (Latin) → Heebo (Hebrew) · Body: Heebo
+            Display: Rubik · Body: Assistant
           </p>
         </div>
       </Block>

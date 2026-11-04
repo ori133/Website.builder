@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import { Heebo, Unbounded } from "next/font/google";
+import { Assistant, Rubik } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-const heebo = Heebo({
-  variable: "--font-heebo",
+// Display: Rubik (rounded geometric, Hebrew + Latin in one family so mixed headlines stay consistent).
+const rubik = Rubik({
+  variable: "--font-rubik",
   subsets: ["hebrew", "latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-// Wide geometric display face (Latin only). Hebrew glyphs fall through to Heebo.
-const unbounded = Unbounded({
-  variable: "--font-unbounded",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+// Body: Assistant (clean, highly readable Hebrew + Latin).
+const assistant = Assistant({
+  variable: "--font-assistant",
+  subsets: ["hebrew", "latin"],
+  weight: ["300", "400", "600"],
 });
 
 export const metadata: Metadata = {
@@ -26,7 +28,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="he" dir="rtl" className={`${heebo.variable} ${unbounded.variable} h-full antialiased`}>
+    <html lang="he" dir="rtl" data-scroll-behavior="smooth"
+      className={`${rubik.variable} ${assistant.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <Header />
         <main className="flex-1">{children}</main>

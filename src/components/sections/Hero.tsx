@@ -29,13 +29,13 @@ export default function Hero() {
             </div>
             <HeroVisual className="relative -order-1 h-72 sm:h-96 lg:order-none lg:h-[32rem]" />
           </div>
-          <IconButton href="#generator" label="גללו למחולל" size="lg" className="absolute bottom-6 end-6 hidden sm:inline-flex">
+          <IconButton href="#generator" label="גללו למחולל" size="lg" className="absolute! bottom-6 end-6 hidden sm:inline-flex">
             <ArrowDown />
           </IconButton>
         </HeroCard>
       </Container>
 
-      <Container className="py-16 text-center sm:py-24">
+      <Container className="reveal py-16 text-center sm:py-24">
         <GeneratorDemo />
       </Container>
     </section>
