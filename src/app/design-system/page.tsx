@@ -192,7 +192,8 @@ export default function DesignSystemPage() {
         <HeroCard>
           <HeroVisual className="absolute inset-0 z-0" />
           <div className="relative z-10 flex min-h-[28rem] items-center p-6 sm:p-10">
-            <div className="flex max-w-lg flex-col items-start gap-5">
+            <div className="relative isolate flex max-w-lg flex-col items-start gap-5">
+              <span className="text-scrim" aria-hidden="true" />
               <Badge tag="New">Introducing our new hosting</Badge>
               <Heading level="h1">
                 Build on <GradientText>decentralized</GradientText> protocol

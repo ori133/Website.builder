@@ -17,7 +17,8 @@ export default function Hero() {
           {/* Physics scene fills the whole card; objects can drift behind the text. */}
           <HeroVisual className="absolute inset-0 z-0" />
           <div className="relative z-10 flex min-h-[34rem] items-center p-6 sm:p-10 lg:min-h-[40rem] lg:p-[var(--spacing-inset)]">
-            <div className="flex max-w-2xl flex-col items-start gap-6 animate-fade-up drop-shadow-[0_0_18px_var(--color-card)]">
+            <div className="relative isolate flex max-w-2xl flex-col items-start gap-6 animate-fade-up">
+              <span className="text-scrim" aria-hidden="true" />
               <Badge tag="חדש">מחולל אתרים מבוסס AI</Badge>
               <Heading level="display">
                 תארו את האתר שלכם — <GradientText>ה-AI יראה לכם אותו</GradientText> תוך שניות

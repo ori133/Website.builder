@@ -93,8 +93,9 @@ function NeonEnvironment() {
 
 const CURSOR_R = 0.4; // physical radius of the cursor "paddle" — it only touches what it actually overlaps
 const TAN = Math.tan(THREE.MathUtils.degToRad(16)); // half of fov 32
-const MAX_SPEED = 14;
-const MIN_SPEED = 0.7;
+const MAX_SPEED = 3.5;
+const MIN_SPEED = 0.35;
+const MAX_SPIN = 2.5; // rad/s
 const FAR = new THREE.Vector3(0, 0, 60);
 
 function createSim() {
@@ -112,7 +113,7 @@ function createSim() {
   const bodies = ITEMS.map((it) => {
     const shape =
       it.kind === "cube" ? new CANNON.Box(new CANNON.Vec3(it.size / 2, it.size / 2, it.size / 2)) : new CANNON.Sphere(it.size / 2);
-    const b = new CANNON.Body({ mass: it.size ** 3, shape, linearDamping: 0.01, angularDamping: 0.04 });
+    const b = new CANNON.Body({ mass: it.size ** 3, shape, linearDamping: 0.12, angularDamping: 0.04 });
     b.linearFactor.set(1, 1, 0);
     return b;
   });
@@ -237,7 +238,7 @@ function Cubes({ paused }: { paused: boolean }) {
         const r = Math.sqrt((i + 0.5) / bodies.length);
         b.position.set(Math.cos(ang) * r * (halfW - 1.2), Math.sin(ang) * r * (halfH - 1.2), 0);
         b.quaternion.setFromEuler(Math.random() * 3, Math.random() * 3, Math.random() * 3);
-        const v = 0.9 + Math.random() * 0.7;
+        const v = 0.4 + Math.random() * 0.5;
         const a2 = Math.random() * Math.PI * 2;
         b.velocity.set(Math.cos(a2) * v, Math.sin(a2) * v, 0);
         b.angularVelocity.set((Math.random() - 0.5) * 1.6, (Math.random() - 0.5) * 1.6, (Math.random() - 0.5) * 1.2);
@@ -257,7 +258,7 @@ function Cubes({ paused }: { paused: boolean }) {
     // Kinematic paddle: velocity-driven (so contacts carry real momentum), clamped to avoid tunnelling.
     const cv = new CANNON.Vec3((c.x - cursor.position.x) / dt, (c.y - cursor.position.y) / dt, 0);
     const cs = cv.length();
-    if (cs > 18 && c.z < 10) cv.scale(18 / cs, cv);
+    if (cs > 7 && c.z < 10) cv.scale(7 / cs, cv);
     if (c.z >= 10) cursor.position.set(c.x, c.y, c.z);
     cursor.velocity.copy(cv);
     if (c.z < 10) cursor.position.z = 0;
@@ -266,7 +267,7 @@ function Cubes({ paused }: { paused: boolean }) {
       bodies.forEach((b) => {
         const dx = b.position.x - c.x, dy = b.position.y - c.y;
         const d = Math.hypot(dx, dy) + 0.4;
-        const f = (5 * b.mass) / (d * 0.5 + 0.5);
+        const f = (2.2 * b.mass) / (d * 0.5 + 0.5);
         b.applyImpulse(new CANNON.Vec3((dx / d) * f, (dy / d) * f, 0));
         b.angularVelocity.x += (Math.random() - 0.5) * 4;
         b.angularVelocity.y += (Math.random() - 0.5) * 4;
@@ -288,6 +289,8 @@ function Cubes({ paused }: { paused: boolean }) {
       if (b.position.y < -maxY) { b.position.y = -maxY; b.velocity.y = Math.abs(b.velocity.y) * 0.92; }
       b.position.z = 0;
       b.velocity.z = 0;
+      const w = b.angularVelocity.length();
+      if (w > MAX_SPIN) b.angularVelocity.scale(MAX_SPIN / w, b.angularVelocity);
       // Keep things drifting (no friction in space) but never racing.
       const sp = Math.hypot(b.velocity.x, b.velocity.y);
       if (sp > MAX_SPEED) { b.velocity.x *= MAX_SPEED / sp; b.velocity.y *= MAX_SPEED / sp; }

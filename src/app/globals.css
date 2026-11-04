@@ -282,3 +282,21 @@ body {
   pointer-events: none;
   transition: opacity 0.3s;
 }
+
+/* Frosted scrim behind hero text: blurs + dims whatever drifts behind it, with feathered edges. */
+.text-scrim {
+  position: absolute;
+  inset: -1.75rem -2rem;
+  z-index: -1;
+  border-radius: var(--radius-panel);
+  background: color-mix(in srgb, var(--color-card) 62%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  --feather: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+  --feather-y: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  -webkit-mask-image: var(--feather), var(--feather-y);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--feather), var(--feather-y);
+  mask-composite: intersect;
+  pointer-events: none;
+}
