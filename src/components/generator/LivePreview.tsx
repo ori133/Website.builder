@@ -19,7 +19,7 @@ function Frame({ url, children }: { url: string; children: React.ReactNode }) {
 export function PreviewEmpty() {
   return (
     <Frame url="your-site.com">
-      <div className="flex aspect-[16/9] min-h-64 flex-col items-center justify-center gap-2 bg-card text-center text-ink-muted">
+      <div className="flex min-h-56 flex-col sm:aspect-[16/9] sm:min-h-64 items-center justify-center gap-2 bg-card text-center text-ink-muted">
         <span className="text-4xl" aria-hidden="true">
           🪄
         </span>
@@ -67,22 +67,22 @@ export function PreviewSite({ site }: { site: GeneratedSite }) {
       <div className="fade-up" style={{ background: bg, color: fg }}>
         <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-3 text-sm" style={{ background: soft }}>
           <strong style={{ color: accent }}>{brand}</strong>
-          <nav className="flex gap-4 opacity-80">
+          <nav className="flex flex-wrap gap-x-3 gap-y-1 text-xs opacity-80 sm:gap-4 sm:text-sm">
             {t.navItems.map((n) => (
               <span key={n}>{n}</span>
             ))}
           </nav>
         </div>
 
-        <div className="px-6 py-10 text-center sm:py-14">
-          <h3 className="text-2xl font-extrabold sm:text-4xl">{t.headline}</h3>
+        <div className="px-5 py-8 text-center sm:px-6 sm:py-14">
+          <h3 className="text-xl font-extrabold sm:text-4xl">{t.headline}</h3>
           <p className="mx-auto mt-3 max-w-xl opacity-80">{t.subheadline}</p>
           <span className="mt-6 inline-block rounded-lg px-6 py-2.5 font-semibold text-white" style={{ background: accent }}>
             {t.cta}
           </span>
         </div>
 
-        <div className="grid gap-4 px-6 pb-10 sm:grid-cols-3">
+        <div className={`grid gap-3 px-4 pb-8 sm:grid-cols-3 sm:gap-4 sm:px-6 sm:pb-10 ${t.layout === "gallery" ? "grid-cols-2" : ""}`}>
           {t.layout === "gallery" &&
             tileGradients.map((g, i) => (
               <div key={i} className="aspect-[4/3] rounded-xl" style={{ background: g }} aria-hidden="true" />

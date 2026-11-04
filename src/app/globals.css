@@ -61,7 +61,7 @@
   --font-display: var(--font-rubik), system-ui, sans-serif;
 
   /* Type scale (size / line-height) */
-  --text-display: clamp(2.5rem, 1.3rem + 4.4vw, 4.75rem);
+  --text-display: clamp(2rem, 0.9rem + 4.8vw, 4.75rem);
   --text-display--line-height: 1.08;
   --text-h1: clamp(2rem, 1.2rem + 3vw, 3.5rem);
   --text-h1--line-height: 1.15;
@@ -156,6 +156,7 @@ html {
 }
 
 body {
+  overflow-x: clip;
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -257,12 +258,16 @@ body {
   transform: translateX(-120%);
   transition: transform 0.7s var(--ease-out-soft);
 }
-.btn-shine:hover::after { transform: translateX(120%); }
+@media (hover: hover) {
+  .btn-shine:hover::after { transform: translateX(120%); }
+}
 [dir="rtl"] .btn-shine::after {
   transform: translateX(120%);
   background: linear-gradient(250deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
 }
-[dir="rtl"] .btn-shine:hover::after { transform: translateX(-120%); }
+@media (hover: hover) {
+  [dir="rtl"] .btn-shine:hover::after { transform: translateX(-120%); }
+}
 
 /* Gradient hairline border for glass buttons (mask trick). */
 .btn-outline {
@@ -298,4 +303,8 @@ body {
   mask-image: var(--feather), var(--feather-y);
   mask-composite: intersect;
   pointer-events: none;
+}
+/* On phones the text sits below the 3D area, so no scrim is needed. */
+@media (max-width: 639px) {
+  .text-scrim { display: none; }
 }

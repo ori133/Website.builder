@@ -42,22 +42,22 @@ export default function PromptBox({
             className="w-full resize-none bg-transparent text-lg leading-relaxed text-ink placeholder:text-ink-subtle focus:outline-none sm:text-xl"
           />
           <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-            <p className="text-xs text-ink-subtle">Enter לשליחה · Shift+Enter לשורה חדשה</p>
-            <Button onClick={onSubmit} disabled={busy || value.trim().length < 3}>
+            <p className="hidden text-xs text-ink-subtle sm:block">Enter לשליחה · Shift+Enter לשורה חדשה</p>
+            <Button onClick={onSubmit} disabled={busy || value.trim().length < 3} className="max-sm:w-full max-sm:justify-between">
               {busy ? "יוצר..." : "צור דמו ב-AI"}
             </Button>
           </div>
         </div>
       </div>
 
-      <div className="mt-5 flex flex-wrap justify-center gap-2" aria-label="דוגמאות">
+      <div className="-mx-4 mt-5 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0" aria-label="דוגמאות">
         {examples.map((ex) => (
           <button
             key={ex}
             type="button"
             disabled={busy}
             onClick={() => onChange(ex)}
-            className="rounded-pill border border-line-strong bg-glass px-4 py-1.5 text-sm text-ink-muted transition hover:border-violet-300 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-200 disabled:opacity-50"
+            className="min-h-11 shrink-0 whitespace-nowrap rounded-pill border border-line-strong bg-glass px-4 py-1.5 text-sm text-ink-muted transition hover:border-violet-300 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-200 disabled:opacity-50"
           >
             {ex}
           </button>

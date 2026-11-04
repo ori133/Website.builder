@@ -11,7 +11,7 @@ const steps = [
 export default function HowItWorks() {
   return (
     <Section id="how" title="איך זה עובד" subtitle="מדוגמה מהירה לאתר אמיתי בשלושה צעדים.">
-      <ol className="grid gap-6 sm:grid-cols-3">
+      <ol className="grid gap-4 sm:gap-6 md:grid-cols-3">
         {steps.map((s) => (
           <li key={s.n}>
             <Card className="h-full">

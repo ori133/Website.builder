@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Assistant, Rubik } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
@@ -18,6 +18,13 @@ const assistant = Assistant({
   weight: ["300", "400", "600"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#05001f",
+};
+
 export const metadata: Metadata = {
   title: {
     default: "סטודיו אתרים | בניית אתרים לעסקים",
@@ -33,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`,
+            __html: `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",t==="light"?"#f4f1ff":"#05001f")}}catch(e){}`,
           }}
         />
       </head>

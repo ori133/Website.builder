@@ -29,9 +29,9 @@ export default function Modal({
       onClose={onClose}
       onClick={(e) => e.target === ref.current && onClose()}
       aria-labelledby={titleId}
-      className="m-auto w-[min(92vw,28rem)] rounded-panel border border-line-strong bg-surface p-0 text-ink shadow-glow backdrop:bg-black/70 backdrop:backdrop-blur-sm"
+      className="m-auto max-h-[90dvh] w-[min(92vw,28rem)] overflow-y-auto rounded-panel border border-line-strong bg-surface p-0 text-ink shadow-glow backdrop:bg-black/70 backdrop:backdrop-blur-sm"
     >
-      <div className="p-6 text-start">{children}</div>
+      <div className="p-5 text-start sm:p-6">{children}</div>
     </dialog>
   );
 }

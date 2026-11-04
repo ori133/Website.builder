@@ -42,15 +42,15 @@ export default function ContactForm() {
         <Input id="name" name="name" required autoComplete="name" aria-invalid={!!errors.name} />
       </Field>
       <Field id="email" label="אימייל" errors={errors.email}>
-        <Input id="email" name="email" type="email" required autoComplete="email" dir="ltr" aria-invalid={!!errors.email} />
+        <Input id="email" name="email" type="email" inputMode="email" required autoComplete="email" dir="ltr" aria-invalid={!!errors.email} />
       </Field>
       <Field id="phone" label="טלפון (לא חובה)" errors={errors.phone}>
-        <Input id="phone" name="phone" type="tel" autoComplete="tel" dir="ltr" aria-invalid={!!errors.phone} />
+        <Input id="phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" dir="ltr" aria-invalid={!!errors.phone} />
       </Field>
       <Field id="message" label="הודעה" errors={errors.message}>
         <Textarea id="message" name="message" rows={5} required aria-invalid={!!errors.message} />
       </Field>
-      <Button type="submit" size="lg" disabled={status === "sending"}>
+      <Button type="submit" size="lg" disabled={status === "sending"} className="max-sm:w-full max-sm:justify-between">
         {status === "sending" ? "שולח..." : "שלחו הודעה"}
       </Button>
       {status === "success" && (

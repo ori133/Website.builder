@@ -15,15 +15,16 @@ type Item = { kind: "cube" | "sphere"; size: number };
 
 // Free-floating rigid bodies. They roam the whole canvas (even behind the hero text),
 // bounce off the invisible edges of the view, and collide elastically with each other.
-const ITEMS: Item[] = [
+// Ordered so the first 6 (used on phones) are already a good mix of cubes and spheres.
+const ALL_ITEMS: Item[] = [
   { kind: "cube", size: 1.15 },
+  { kind: "sphere", size: 0.95 },
   { kind: "cube", size: 1.0 },
   { kind: "cube", size: 1.3 },
+  { kind: "sphere", size: 0.8 },
   { kind: "cube", size: 0.9 },
   { kind: "cube", size: 1.1 },
   { kind: "cube", size: 0.8 },
-  { kind: "sphere", size: 0.95 },
-  { kind: "sphere", size: 0.8 },
   { kind: "sphere", size: 0.7 },
 ];
 
@@ -98,7 +99,7 @@ const MIN_SPEED = 0.35;
 const MAX_SPIN = 2.5; // rad/s
 const FAR = new THREE.Vector3(0, 0, 60);
 
-function createSim() {
+function createSim(items: Item[]) {
   const world = new CANNON.World({ gravity: new CANNON.Vec3(0, 0, 0) });
   world.broadphase = new CANNON.SAPBroadphase(world);
   world.allowSleep = false;
@@ -110,7 +111,7 @@ function createSim() {
     contactEquationStiffness: 1e8,
     contactEquationRelaxation: 3,
   });
-  const bodies = ITEMS.map((it) => {
+  const bodies = items.map((it) => {
     const shape =
       it.kind === "cube" ? new CANNON.Box(new CANNON.Vec3(it.size / 2, it.size / 2, it.size / 2)) : new CANNON.Sphere(it.size / 2);
     const b = new CANNON.Body({ mass: it.size ** 3, shape, linearDamping: 0.12, angularDamping: 0.04 });
@@ -129,6 +130,8 @@ function Cubes({ paused }: { paused: boolean }) {
   const light = useRef<THREE.PointLight>(null);
   const meshes = useRef<(THREE.Mesh | null)[]>([]);
   const placed = useRef(false);
+  const compact = useThree((state) => state.size.width < 640);
+  const items = useMemo(() => (compact ? ALL_ITEMS.slice(0, 6) : ALL_ITEMS), [compact]);
   const dots = useDotTexture();
 
   const cubeGeo = useMemo(() => new RoundedBoxGeometry(1, 1, 1, 5, 0.09), []);
@@ -156,12 +159,12 @@ function Cubes({ paused }: { paused: boolean }) {
   // Zero-gravity world; motion is locked to the z = 0 plane so the cursor maps exactly onto the bodies.
   const simRef = useRef<ReturnType<typeof createSim> | null>(null);
   useEffect(() => {
-    simRef.current = createSim();
+    simRef.current = createSim(items);
     placed.current = false;
     return () => {
       simRef.current = null;
     };
-  }, []);
+  }, [items]);
 
   const pointer = useRef({ active: false, x: 0, y: 0, burst: false });
   const target = useRef(FAR.clone());
@@ -279,7 +282,7 @@ function Cubes({ paused }: { paused: boolean }) {
     world.step(1 / 120, dt, 8);
 
     bodies.forEach((b, i) => {
-      const it = ITEMS[i];
+      const it = items[i];
       const m = it.kind === "cube" ? it.size * 0.78 : it.size * 0.5;
       // Elastic bounce off the view edges so nothing is ever clipped by the canvas.
       const maxX = halfW - m, maxY = halfH - m;
@@ -315,7 +318,7 @@ function Cubes({ paused }: { paused: boolean }) {
   return (
     <>
       <pointLight ref={light} color="#b98cff" intensity={0} distance={8} decay={1.6} />
-      {ITEMS.map((it, i) => (
+      {items.map((it, i) => (
         <mesh
           key={i}
           ref={(el) => void (meshes.current[i] = el)}
@@ -333,7 +336,7 @@ export default function CubesScene({ paused = false }: CubesSceneProps) {
   return (
     <Canvas
       frameloop={paused ? "never" : "always"}
-      dpr={[1, 1.75]}
+      dpr={[1, 1.5]}
       camera={{ position: [0, 0, 12], fov: 32 }}
       gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
       style={{ background: "transparent", touchAction: "pan-y" }}
