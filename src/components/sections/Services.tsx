@@ -6,9 +6,12 @@ export default function Services() {
     <Section title="השירותים שלנו" subtitle="פתרונות מלאים לעסקים בכל גודל." className="bg-surface">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {services.map((s) => (
-          <article key={s.title} className="rounded-xl border border-slate-200 bg-background p-6 shadow-sm">
+          <article
+            key={s.title}
+            className="rounded-3xl border border-border bg-background p-7 transition hover:-translate-y-0.5 hover:shadow-soft"
+          >
             <h3 className="text-lg font-semibold">{s.title}</h3>
-            <p className="mt-2 text-sm text-muted">{s.description}</p>
+            <p className="mt-2 text-sm leading-relaxed text-muted">{s.description}</p>
           </article>
         ))}
       </div>

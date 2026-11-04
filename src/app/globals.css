@@ -1,23 +1,109 @@
 @import "tailwindcss";
 
-:root {
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+/* ---------- Semantic tokens ---------- */
+:root,
+[data-theme="light"] {
   --background: #ffffff;
   --foreground: #0f172a;
+  --surface: #f8fafc;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --ink: #0f172a;
+  --ink-hover: #1e293b;
+  --ink-fg: #ffffff;
+  --accent: #2563eb;
+  --shadow-color: rgb(15 23 42 / 0.2);
+  --network: #0f172a;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --background: #0b1020;
+  --foreground: #f1f5f9;
+  --surface: #121933;
+  --muted: #94a3b8;
+  --border: rgb(255 255 255 / 0.12);
+  --ink: #f8fafc;
+  --ink-hover: #e2e8f0;
+  --ink-fg: #0b1020;
+  --accent: #60a5fa;
+  --shadow-color: rgb(0 0 0 / 0.6);
+  --network: #e2e8f0;
+  color-scheme: dark;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: #4f46e5;
-  --color-primary-dark: #4338ca;
-  --color-accent: #06b6d4;
-  --color-surface: #f8fafc;
-  --color-muted: #64748b;
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--ink);
+  --color-primary-dark: var(--ink-hover);
+  --color-primary-fg: var(--ink-fg);
+  --color-accent: var(--accent);
   --font-sans: var(--font-heebo), system-ui, sans-serif;
+
+  --shadow-float: 0 24px 60px -18px var(--shadow-color);
+  --shadow-soft: 0 12px 36px -14px var(--shadow-color);
+}
+
+:root {
+  /* Expressive gradient: used only for hero / highlights */
+  --gradient-hero: linear-gradient(
+    135deg,
+    #14b8a6 0%,
+    #7c3aed 40%,
+    #d6246e 75%,
+    #b91c1c 100%
+  );
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* ---------- Typography ---------- */
+.display {
+  font-size: clamp(2.5rem, 7.2vw, 6.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+}
+
+/* ---------- Decorative motion ---------- */
+@keyframes wave-drift {
+  0%,
+  100% {
+    transform: translate3d(-2%, 0, 0);
+  }
+  50% {
+    transform: translate3d(2%, 6px, 0);
+  }
+}
+
+.wave-layer {
+  animation: wave-drift 14s ease-in-out infinite;
+}
+.wave-layer:nth-of-type(2) {
+  animation-duration: 18s;
+  animation-direction: reverse;
+}
+.wave-layer:nth-of-type(3) {
+  animation-duration: 22s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-layer {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
 }

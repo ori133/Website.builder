@@ -13,12 +13,12 @@ export default function Section({
   className?: string;
 }) {
   return (
-    <section className={`py-16 sm:py-20 ${className}`}>
+    <section className={`py-20 sm:py-28 ${className}`}>
       <Container>
         {title && (
-          <div className="mb-10 max-w-2xl">
-            <h2 className="text-3xl font-bold">{title}</h2>
-            {subtitle && <p className="mt-3 text-muted">{subtitle}</p>}
+          <div className="mb-12 max-w-2xl">
+            <h2 className="text-4xl font-medium tracking-tight sm:text-5xl">{title}</h2>
+            {subtitle && <p className="mt-4 text-lg text-muted">{subtitle}</p>}
           </div>
         )}
         {children}

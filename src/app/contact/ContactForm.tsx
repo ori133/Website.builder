@@ -5,7 +5,7 @@ import { useState, type FormEvent } from "react";
 type Errors = Partial<Record<"name" | "email" | "phone" | "message", string[]>>;
 
 const inputClass =
-  "mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30";
+  "mt-1 w-full rounded-2xl border border-border bg-background px-4 py-3 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -70,7 +70,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "sending"}
-        className="rounded-lg bg-primary px-6 py-3 font-medium text-white transition-colors hover:bg-primary-dark disabled:opacity-60"
+        className="rounded-full bg-primary px-7 py-3.5 font-medium text-primary-fg transition-colors hover:bg-primary-dark disabled:opacity-60"
       >
         {status === "sending" ? "שולח..." : "שלחו הודעה"}
       </button>
