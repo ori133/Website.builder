@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { Logo } from "@/components/ui/Icons";
 import { navLinks, siteConfig } from "@/data/site";
 
@@ -22,10 +23,13 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <div className="hidden sm:block">
-          <Button href="/#generator" variant="secondary">
-            נסו את המחולל
-          </Button>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <div className="hidden sm:block">
+            <Button href="/#generator" variant="secondary">
+              נסו את המחולל
+            </Button>
+          </div>
         </div>
       </Container>
     </header>

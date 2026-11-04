@@ -190,16 +190,16 @@ export default function DesignSystemPage() {
 
       <Block id="hero" title="Hero Card + אובייקט תלת־ממדי">
         <HeroCard>
-          <div className="grid min-h-[28rem] items-center gap-6 p-6 sm:p-10 lg:grid-cols-2">
-            <div className="flex flex-col items-start gap-5">
+          <HeroVisual className="absolute inset-0 z-0" />
+          <div className="relative z-10 flex min-h-[28rem] items-center p-6 sm:p-10">
+            <div className="flex max-w-lg flex-col items-start gap-5">
               <Badge tag="New">Introducing our new hosting</Badge>
               <Heading level="h1">
                 Build on <GradientText>decentralized</GradientText> protocol
               </Heading>
-              <Text className="max-w-sm">הרכיב המלא: Badge, כותרת בגרדיאנט, טקסט, CTA ואובייקט תלת־ממדי שנע בלופ.</Text>
+              <Text className="max-w-sm">הרכיב המלא: Badge, כותרת בגרדיאנט, טקסט, CTA ואובייקטים בפיזיקה אמיתית שמגיבים לעכבר.</Text>
               <Button href="#hero">Schedule demo</Button>
             </div>
-            <HeroVisual className="relative h-72 lg:h-[26rem]" />
           </div>
         </HeroCard>
       </Block>

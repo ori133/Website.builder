@@ -16,10 +16,10 @@ const base =
 const variants: Record<Variant, string> = {
   // White pill + gradient arrow orb — the hero CTA. Glows and sweeps light on hover.
   primary:
-    "btn-shine bg-gradient-to-b from-white to-violet-50 text-on-light shadow-[0_6px_24px_-6px_rgb(154_103_238/0.65),inset_0_-2px_0_rgb(154_103_238/0.18)] hover:shadow-[0_14px_40px_-8px_rgb(185_130_255/0.9),inset_0_-2px_0_rgb(154_103_238/0.18)]",
+    "btn-shine bg-gradient-to-b from-cta-from to-cta-to text-cta-ink shadow-[0_6px_24px_-6px_rgb(154_103_238/0.65),inset_0_-2px_0_rgb(154_103_238/0.18)] hover:shadow-[0_14px_40px_-8px_rgb(185_130_255/0.9),inset_0_-2px_0_rgb(154_103_238/0.18)]",
   // Frosted glass with a gradient hairline border.
   secondary:
-    "btn-outline bg-glass text-ink hover:bg-white/10 hover:shadow-[0_10px_32px_-10px_rgb(154_103_238/0.8)]",
+    "btn-outline bg-glass text-ink hover:bg-ink/5 hover:shadow-[0_10px_32px_-10px_rgb(154_103_238/0.8)]",
   ghost: "text-ink-muted hover:text-ink hover:translate-y-0",
 };
 

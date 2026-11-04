@@ -3,7 +3,7 @@ import { cx } from "./cx";
 
 const cls = (size: "md" | "lg", className?: string) =>
   cx(
-    "btn-outline inline-flex items-center justify-center rounded-full bg-glass text-ink transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-[0_10px_32px_-10px_rgb(154_103_238/0.8)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-200",
+    "btn-outline inline-flex items-center justify-center rounded-full bg-glass text-ink transition-all duration-300 hover:-translate-y-0.5 hover:bg-ink/5 hover:shadow-[0_10px_32px_-10px_rgb(154_103_238/0.8)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-200",
     size === "lg" ? "size-16 sm:size-[4.5rem]" : "size-11",
     className,
   );

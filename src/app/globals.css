@@ -42,6 +42,11 @@
   --color-line: rgb(255 255 255 / 0.1);
   --color-line-strong: rgb(255 255 255 / 0.2);
 
+  /* Primary CTA surface (white pill on dark, ink pill on light) */
+  --color-cta-from: #ffffff;
+  --color-cta-to: #f4eeff;
+  --color-cta-ink: #0b0a0d;
+
   /* Feedback (AA on --color-bg) */
   --color-success: #4ade80;
   --color-danger: #ff6b81;
@@ -103,6 +108,43 @@
 
 :root {
   color-scheme: dark;
+  --glass: rgb(255 255 255 / 0.06);
+  --aurora-1: var(--color-violet-300);
+  --aurora-2: var(--color-violet-500);
+  --aurora-3: var(--color-violet-800);
+  --grad-from: #ffffff;
+  --grad-to: var(--color-violet-200);
+  --outline-a: rgb(255 255 255 / 0.45);
+  --outline-b: rgb(255 255 255 / 0.06);
+}
+
+/* Light theme: same tokens, remapped. Toggled via <html data-theme="light">. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: #f4f1ff;
+  --color-card: #fcfbff;
+  --color-surface: #ffffff;
+  --color-surface-2: #ebe6fa;
+  --color-ink: #15102e;
+  --color-ink-muted: rgb(21 16 46 / 0.72);
+  --color-ink-subtle: rgb(21 16 46 / 0.54);
+  --color-on-light: #0b0a0d;
+  --color-line: rgb(21 16 46 / 0.1);
+  --color-line-strong: rgb(21 16 46 / 0.2);
+  --color-cta-from: #2c1f66;
+  --color-cta-to: #150c3a;
+  --color-cta-ink: #ffffff;
+  --color-success: #15803d;
+  --color-danger: #d4243f;
+  --shadow-card: 0 30px 70px -35px rgb(60 30 140 / 0.35);
+  --glass: rgb(255 255 255 / 0.7);
+  --aurora-1: #d9c3ff;
+  --aurora-2: #b99bff;
+  --aurora-3: #ece2ff;
+  --grad-from: #15102e;
+  --grad-to: var(--color-violet-600);
+  --outline-a: rgb(114 57 225 / 0.4);
+  --outline-b: rgb(114 57 225 / 0.08);
 }
 
 /* Smooth anchor scrolling; offset for the sticky header. */
@@ -133,14 +175,14 @@ body {
 @utility bg-aurora {
   background-color: var(--color-card);
   background-image:
-    radial-gradient(120% 90% at 0% 100%, var(--color-violet-300) 0%, var(--color-violet-500) 28%, transparent 62%),
-    radial-gradient(90% 70% at 0% 0%, var(--color-violet-800) 0%, transparent 60%),
+    radial-gradient(120% 90% at 0% 100%, var(--aurora-1) 0%, var(--aurora-2) 28%, transparent 62%),
+    radial-gradient(90% 70% at 0% 0%, var(--aurora-3) 0%, transparent 60%),
     radial-gradient(60% 50% at 100% 100%, rgb(114 57 225 / 0.28) 0%, transparent 70%);
 }
 [dir="rtl"] .bg-aurora {
   background-image:
-    radial-gradient(120% 90% at 100% 100%, var(--color-violet-300) 0%, var(--color-violet-500) 28%, transparent 62%),
-    radial-gradient(90% 70% at 100% 0%, var(--color-violet-800) 0%, transparent 60%),
+    radial-gradient(120% 90% at 100% 100%, var(--aurora-1) 0%, var(--aurora-2) 28%, transparent 62%),
+    radial-gradient(90% 70% at 100% 0%, var(--aurora-3) 0%, transparent 60%),
     radial-gradient(60% 50% at 0% 100%, rgb(114 57 225 / 0.28) 0%, transparent 70%);
 }
 
@@ -150,26 +192,26 @@ body {
     radial-gradient(60% 50% at 50% 0%, rgb(114 57 225 / 0.28) 0%, transparent 70%);
 }
 
-/* Headline gradient: white -> lavender. */
+/* Headline gradient: ink -> violet (white -> lavender in dark). */
 @utility text-gradient {
-  background-image: linear-gradient(90deg, #fff 30%, var(--color-violet-200) 100%);
+  background-image: linear-gradient(90deg, var(--grad-from) 30%, var(--grad-to) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 [dir="rtl"] .text-gradient {
-  background-image: linear-gradient(270deg, #fff 30%, var(--color-violet-200) 100%);
+  background-image: linear-gradient(270deg, var(--grad-from) 30%, var(--grad-to) 100%);
 }
 
 /* Frosted-glass surface. */
 @utility bg-glass {
-  background-color: rgb(255 255 255 / 0.06);
+  background-color: var(--glass);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 }
 
 .shimmer {
-  background: linear-gradient(90deg, rgb(255 255 255 / 0.06) 25%, rgb(255 255 255 / 0.14) 50%, rgb(255 255 255 / 0.06) 75%);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 6%, transparent) 25%, color-mix(in srgb, var(--color-ink) 14%, transparent) 50%, color-mix(in srgb, var(--color-ink) 6%, transparent) 75%);
   background-size: 200% 100%;
   animation: var(--animate-shimmer);
 }
@@ -233,7 +275,7 @@ body {
   inset: 0;
   padding: 1px;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgb(255 255 255 / 0.45), rgb(255 255 255 / 0.06) 40%, rgb(154 103 238 / 0.7));
+  background: linear-gradient(135deg, var(--outline-a), var(--outline-b) 40%, rgb(154 103 238 / 0.7));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;

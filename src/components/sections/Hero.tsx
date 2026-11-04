@@ -14,8 +14,10 @@ export default function Hero() {
     <section className="pt-4 sm:pt-6">
       <Container>
         <HeroCard>
-          <div className="grid min-h-[34rem] items-center gap-6 p-6 sm:p-10 lg:min-h-[40rem] lg:grid-cols-2 lg:p-[var(--spacing-inset)]">
-            <div className="relative z-10 flex flex-col items-start gap-6 animate-fade-up">
+          {/* Physics scene fills the whole card; objects can drift behind the text. */}
+          <HeroVisual className="absolute inset-0 z-0" />
+          <div className="relative z-10 flex min-h-[34rem] items-center p-6 sm:p-10 lg:min-h-[40rem] lg:p-[var(--spacing-inset)]">
+            <div className="flex max-w-2xl flex-col items-start gap-6 animate-fade-up drop-shadow-[0_0_18px_var(--color-card)]">
               <Badge tag="חדש">מחולל אתרים מבוסס AI</Badge>
               <Heading level="display">
                 תארו את האתר שלכם — <GradientText>ה-AI יראה לכם אותו</GradientText> תוך שניות
@@ -27,9 +29,8 @@ export default function Hero() {
                 נסו את המחולל
               </Button>
             </div>
-            <HeroVisual className="relative -order-1 h-72 sm:h-96 lg:order-none lg:h-[32rem]" />
           </div>
-          <IconButton href="#generator" label="גללו למחולל" size="lg" className="absolute! bottom-6 end-6 hidden sm:inline-flex">
+          <IconButton href="#generator" label="גללו למחולל" size="lg" className="absolute! bottom-6 end-6 z-10 hidden sm:inline-flex">
             <ArrowDown />
           </IconButton>
         </HeroCard>
