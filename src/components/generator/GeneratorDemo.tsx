@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { detectTemplate, dribbbleQueries, generateSite, type GeneratedSite } from "@/lib/generator";
 import { heroSpecSchema, type HeroSpec } from "@/lib/heroSpec";
+import { analyzeDataUrl } from "@/lib/analyzeImage";
 import Button from "@/components/ui/Button";
 import PromptBox from "./PromptBox";
 import InspirationStep, { type Inspiration } from "./InspirationStep";
@@ -16,16 +17,29 @@ const plainSteps = ["ה-AI מנתח את הבקשה שלכם…", "בוחר תב
 const aiSteps = ["ה-AI מנתח את בקשתכם…", "מנתח את ה-Hero שבחרתם: פריסה, צבעים וטיפוגרפיה…", "בונה Hero קרוב ככל האפשר לבחירה שלכם…"];
 const STEP_MS = 1400;
 
+async function post(body: unknown) {
+  const res = await fetch("/api/analyze-inspiration", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return res.ok ? res.json() : null;
+}
+
+/**
+ * Hero spec from the client's reference. With an API key on the server, Claude looks at it;
+ * otherwise (or if that fails) the browser analyses the pixels itself.
+ */
 async function analyze(insp: Inspiration): Promise<HeroSpec | null> {
   try {
-    const res = await fetch("/api/analyze-inspiration", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(insp.image ? { image: insp.image } : { url: insp.url?.trim() }),
-    });
-    if (!res.ok) return null;
-    const parsed = heroSpecSchema.safeParse((await res.json()).spec);
-    return parsed.success ? parsed.data : null;
+    const url = insp.url?.trim();
+    const ai = await post(insp.image ? { image: insp.image } : { url }).catch(() => null);
+    const parsed = heroSpecSchema.safeParse(ai?.spec);
+    if (parsed.success) return parsed.data;
+
+    let image = insp.image;
+    if (!image && url) image = (await post({ url, fetchOnly: true }).catch(() => null))?.image;
+    return image ? await analyzeDataUrl(image) : null;
   } catch {
     return null;
   }

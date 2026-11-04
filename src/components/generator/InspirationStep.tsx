@@ -55,7 +55,7 @@ export default function InspirationStep({
     <div className="mx-auto w-full max-w-3xl text-start" onPaste={onPaste}>
       <h3 className="font-display text-xl">שלב 2: בחרו Hero שאתם אוהבים</h3>
       <p className="mt-2 text-ink-muted">
-        חפשו השראה ב-Dribbble, שמרו צילום מסך של ה-Hero שמצא חן בעיניכם, והעלו אותו כאן. ה-AI יבנה לכם Hero קרוב ככל האפשר אליו.
+        חפשו השראה ב-Dribbble, שמרו צילום מסך של ה-Hero שמצא חן בעיניכם, והעלו אותו כאן. המערכת תנתח את הפריסה, הצבעים והסגנון ותבנה לכם Hero קרוב ככל האפשר אליו.
       </p>
       <div className="mt-4">
         <Button href={dribbble} target="_blank" rel="noopener noreferrer" variant="secondary">

@@ -11,6 +11,7 @@ const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"] as 
 const bodySchema = z.object({
   image: z.string().max(MAX_IMAGE_B64 + 100).optional(), // data URL
   url: z.string().max(500).optional(), // dribbble shot url
+  fetchOnly: z.boolean().optional(), // just load the shot image (no AI); the browser analyses it itself
 });
 
 // Very small in-memory rate limit (per server instance). Replace with a shared store in production.
@@ -59,11 +60,17 @@ export async function POST(request: Request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
   if (limited(ip)) return Response.json({ error: "rate_limited" }, { status: 429 });
 
-  if (!process.env.ANTHROPIC_API_KEY) return Response.json({ error: "ai_unavailable" }, { status: 503 });
-
   const parsedBody = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsedBody.success) return Response.json({ error: "bad_request" }, { status: 400 });
-  const { image, url } = parsedBody.data;
+  const { image, url, fetchOnly } = parsedBody.data;
+
+  if (fetchOnly) {
+    const shot = url ? await imageFromDribbble(url).catch(() => null) : null;
+    if (!shot) return Response.json({ error: "url_unreadable" }, { status: 422 });
+    return Response.json({ image: `data:${shot.type};base64,${shot.data}` });
+  }
+
+  if (!process.env.ANTHROPIC_API_KEY) return Response.json({ error: "ai_unavailable" }, { status: 503 });
 
   let media: { type: string; data: string } | null = null;
   if (image) {
