@@ -1,13 +1,29 @@
-import type { Metadata } from "next";
-import { Heebo } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Assistant, Rubik } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-const heebo = Heebo({
-  variable: "--font-heebo",
+// Display: Rubik (rounded geometric, Hebrew + Latin in one family so mixed headlines stay consistent).
+const rubik = Rubik({
+  variable: "--font-rubik",
   subsets: ["hebrew", "latin"],
+  weight: ["400", "500", "600", "700"],
 });
+
+// Body: Assistant (clean, highly readable Hebrew + Latin).
+const assistant = Assistant({
+  variable: "--font-assistant",
+  subsets: ["hebrew", "latin"],
+  weight: ["300", "400", "600"],
+});
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#05001f",
+};
 
 export const metadata: Metadata = {
   title: {
@@ -19,7 +35,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="he" dir="rtl" className={`${heebo.variable} h-full antialiased`}>
+    <html lang="he" dir="rtl" data-scroll-behavior="smooth" suppressHydrationWarning
+      className={`${rubik.variable} ${assistant.variable} h-full antialiased`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",t==="light"?"#f4f1ff":"#05001f")}}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <Header />
         <main className="flex-1">{children}</main>

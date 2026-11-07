@@ -1,48 +1,310 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #0f172a;
+/* ==========================================================================
+   Design tokens — "Nebula" dark premium / aurora
+   Source of truth for color, type, radius, shadow and motion.
+   ========================================================================== */
+
+@theme {
+  /* Surfaces */
+  --color-bg: #05001f; /* page background (deep indigo-black) */
+  --color-card: #050309; /* hero / card base (near-black) */
+  --color-surface: #0d0a1f; /* raised surface */
+  --color-surface-2: #1a191e; /* controls (secondary button) */
+
+  /* Brand violet scale (anchor: 500 = #7239e1) */
+  --color-violet-50: #f4eeff;
+  --color-violet-100: #e6d9ff;
+  --color-violet-200: #c9a8ff;
+  --color-violet-300: #c5a3f1;
+  --color-violet-400: #9a67ee;
+  --color-violet-500: #7239e1;
+  --color-violet-600: #6838c3;
+  --color-violet-700: #4f2a9e;
+  --color-violet-800: #3b1f8d;
+  --color-violet-900: #22115a;
+  --color-violet-950: #12063a;
+
+  /* Neon accents (3D object + sparing highlights only) */
+  --color-neon-pink: #ff2bd6;
+  --color-neon-blue: #2f6bff;
+  --color-neon-green: #18e29a;
+  --color-neon-amber: #ffa626;
+
+  /* Text */
+  --color-ink: #faf9fc; /* text on dark / white surface */
+  --color-ink-muted: rgb(250 249 252 / 0.72);
+  --color-ink-subtle: rgb(250 249 252 / 0.5);
+  --color-on-light: #0b0a0d; /* text on white surfaces */
+
+  /* Lines */
+  --color-line: rgb(255 255 255 / 0.1);
+  --color-line-strong: rgb(255 255 255 / 0.2);
+
+  /* Primary CTA surface (white pill on dark, ink pill on light) */
+  --color-cta-from: #ffffff;
+  --color-cta-to: #f4eeff;
+  --color-cta-ink: #0b0a0d;
+
+  /* Feedback (AA on --color-bg) */
+  --color-success: #4ade80;
+  --color-danger: #ff6b81;
+
+  /* Radius */
+  --radius-control: 0.75rem; /* 12 */
+  --radius-panel: 1.5rem; /* 24 */
+  --radius-card: 2.5rem; /* 40 — the hero card in the reference */
+  --radius-pill: 9999px;
+
+  /* Type */
+  --font-sans: var(--font-assistant), system-ui, sans-serif;
+  --font-display: var(--font-rubik), system-ui, sans-serif;
+
+  /* Type scale (size / line-height) */
+  --text-display: clamp(2rem, 0.9rem + 4.8vw, 4.75rem);
+  --text-display--line-height: 1.08;
+  --text-h1: clamp(2rem, 1.2rem + 3vw, 3.5rem);
+  --text-h1--line-height: 1.15;
+  --text-h2: clamp(1.625rem, 1.1rem + 1.8vw, 2.5rem);
+  --text-h2--line-height: 1.2;
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.35;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.55;
+
+  /* Shadow / glow */
+  --shadow-card: 0 30px 80px -30px rgb(0 0 0 / 0.8);
+  --shadow-glow: 0 25px 60px -15px rgb(114 57 225 / 0.55);
+  --shadow-glow-sm: 0 8px 30px -8px rgb(114 57 225 / 0.6);
+
+  /* Spacing helpers */
+  --spacing-inset: 2.8rem; /* hero-card inner padding (~45px in reference) */
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-up: fade-up 0.6s var(--ease-out-soft) both;
+  --animate-glow: glow 5s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-float: float 9s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 25px 60px -15px rgb(114 57 225 / 0.45); }
+    50% { box-shadow: 0 25px 70px -10px rgb(255 43 214 / 0.35); }
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+    50% { transform: translateY(-14px) rotateX(8deg) rotateY(-10deg); }
+  }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: #4f46e5;
-  --color-primary-dark: #4338ca;
-  --color-accent: #06b6d4;
-  --color-surface: #f8fafc;
-  --color-muted: #64748b;
-  --font-sans: var(--font-heebo), system-ui, sans-serif;
+:root {
+  color-scheme: dark;
+  --glass: rgb(255 255 255 / 0.06);
+  --aurora-1: var(--color-violet-300);
+  --aurora-2: var(--color-violet-500);
+  --aurora-3: var(--color-violet-800);
+  --grad-from: #ffffff;
+  --grad-to: var(--color-violet-200);
+  --outline-a: rgb(255 255 255 / 0.45);
+  --outline-b: rgb(255 255 255 / 0.06);
+}
+
+/* Light theme: same tokens, remapped. Toggled via <html data-theme="light">. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: #f4f1ff;
+  --color-card: #fcfbff;
+  --color-surface: #ffffff;
+  --color-surface-2: #ebe6fa;
+  --color-ink: #15102e;
+  --color-ink-muted: rgb(21 16 46 / 0.72);
+  --color-ink-subtle: rgb(21 16 46 / 0.54);
+  --color-on-light: #0b0a0d;
+  --color-line: rgb(21 16 46 / 0.1);
+  --color-line-strong: rgb(21 16 46 / 0.2);
+  --color-cta-from: #2c1f66;
+  --color-cta-to: #150c3a;
+  --color-cta-ink: #ffffff;
+  --color-success: #15803d;
+  --color-danger: #d4243f;
+  --shadow-card: 0 30px 70px -35px rgb(60 30 140 / 0.35);
+  --glass: rgb(255 255 255 / 0.7);
+  --aurora-1: #d9c3ff;
+  --aurora-2: #b99bff;
+  --aurora-3: #ece2ff;
+  --grad-from: #15102e;
+  --grad-to: var(--color-violet-600);
+  --outline-a: rgb(114 57 225 / 0.4);
+  --outline-b: rgb(114 57 225 / 0.08);
+}
+
+/* Smooth anchor scrolling; offset for the sticky header. */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  overflow-x: clip;
+  background: var(--color-bg);
+  color: var(--color-ink);
   font-family: var(--font-sans);
 }
 
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+::selection {
+  background: var(--color-violet-500);
+  color: #fff;
 }
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+
+/* --------------------------------------------------------------------------
+   Utilities that Tailwind can't express as single classes
+   -------------------------------------------------------------------------- */
+
+/* Violet light entering the bottom corner of a dark card (start = inline start). */
+@utility bg-aurora {
+  background-color: var(--color-card);
+  background-image:
+    radial-gradient(120% 90% at 0% 100%, var(--aurora-1) 0%, var(--aurora-2) 28%, transparent 62%),
+    radial-gradient(90% 70% at 0% 0%, var(--aurora-3) 0%, transparent 60%),
+    radial-gradient(60% 50% at 100% 100%, rgb(114 57 225 / 0.28) 0%, transparent 70%);
 }
-@keyframes glow {
-  0%, 100% { box-shadow: 0 25px 50px -12px rgb(99 102 241 / 0.25); }
-  50% { box-shadow: 0 25px 60px -8px rgb(6 182 212 / 0.35); }
+[dir="rtl"] .bg-aurora {
+  background-image:
+    radial-gradient(120% 90% at 100% 100%, var(--aurora-1) 0%, var(--aurora-2) 28%, transparent 62%),
+    radial-gradient(90% 70% at 100% 0%, var(--aurora-3) 0%, transparent 60%),
+    radial-gradient(60% 50% at 0% 100%, rgb(114 57 225 / 0.28) 0%, transparent 70%);
+}
+
+/* Subtle ambient glow for ordinary sections. */
+@utility bg-aurora-soft {
+  background-image:
+    radial-gradient(60% 50% at 50% 0%, rgb(114 57 225 / 0.28) 0%, transparent 70%);
+}
+
+/* Headline gradient: ink -> violet (white -> lavender in dark). */
+@utility text-gradient {
+  background-image: linear-gradient(90deg, var(--grad-from) 30%, var(--grad-to) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+[dir="rtl"] .text-gradient {
+  background-image: linear-gradient(270deg, var(--grad-from) 30%, var(--grad-to) 100%);
+}
+
+/* Frosted-glass surface. */
+@utility bg-glass {
+  background-color: var(--glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 6%, transparent) 25%, color-mix(in srgb, var(--color-ink) 14%, transparent) 50%, color-mix(in srgb, var(--color-ink) 6%, transparent) 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.4s linear infinite;
+  animation: var(--animate-shimmer);
 }
-.fade-up { animation: fade-up 0.5s ease-out both; }
-.prompt-glow { animation: glow 4s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .shimmer, .fade-up, .prompt-glow { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Scroll reveal: sections ease in as they enter the viewport (CSS-only,
+   progressive enhancement — content is fully visible where unsupported).
+   -------------------------------------------------------------------------- */
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(40px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+/* Sweep of light across a pill on hover. */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.7s var(--ease-out-soft);
+}
+@media (hover: hover) {
+  .btn-shine:hover::after { transform: translateX(120%); }
+}
+[dir="rtl"] .btn-shine::after {
+  transform: translateX(120%);
+  background: linear-gradient(250deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
+}
+@media (hover: hover) {
+  [dir="rtl"] .btn-shine:hover::after { transform: translateX(-120%); }
+}
+
+/* Gradient hairline border for glass buttons (mask trick). */
+.btn-outline {
+  position: relative;
+}
+.btn-outline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--outline-a), var(--outline-b) 40%, rgb(154 103 238 / 0.7));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+/* Frosted scrim behind hero text: blurs + dims whatever drifts behind it, with feathered edges. */
+.text-scrim {
+  position: absolute;
+  inset: -1.75rem -2rem;
+  z-index: -1;
+  border-radius: var(--radius-panel);
+  background: color-mix(in srgb, var(--color-card) 62%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  --feather: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+  --feather-y: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  -webkit-mask-image: var(--feather), var(--feather-y);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--feather), var(--feather-y);
+  mask-composite: intersect;
+  pointer-events: none;
+}
+/* On phones the text sits below the 3D area, so no scrim is needed. */
+@media (max-width: 639px) {
+  .text-scrim { display: none; }
 }

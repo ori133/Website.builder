@@ -1,15 +1,19 @@
 import Section from "@/components/ui/Section";
+import { Card } from "@/components/ui/Card";
+import { Heading, Text } from "@/components/ui/Typography";
 import { services } from "@/data/services";
 
 export default function Services() {
   return (
-    <Section title="השירותים שלנו" subtitle="פתרונות מלאים לעסקים בכל גודל." className="bg-surface">
+    <Section id="services" title="מה אפשר לבנות" subtitle="הדמו מראה רק טעימה. כך נראים הסוגים השונים של אתרים שאנחנו בונים." className="bg-aurora-soft">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {services.map((s) => (
-          <article key={s.title} className="rounded-xl border border-slate-200 bg-background p-6 shadow-sm">
-            <h3 className="text-lg font-semibold">{s.title}</h3>
-            <p className="mt-2 text-sm text-muted">{s.description}</p>
-          </article>
+          <Card key={s.title} className="h-full">
+            <Heading level="h3">{s.title}</Heading>
+            <Text size="sm" className="mt-2">
+              {s.description}
+            </Text>
+          </Card>
         ))}
       </div>
     </Section>
