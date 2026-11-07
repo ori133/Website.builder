@@ -4,6 +4,8 @@ export type GeneratedSite = {
   template: TemplateDef;
   brand: string;
   prompt: string;
+  /** Full HTML page returned by Claude. When absent, the local template simulation is shown. */
+  html?: string;
 };
 
 const order: TemplateId[] = ["portfolio", "restaurant", "store", "landing"];

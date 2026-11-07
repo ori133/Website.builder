@@ -49,6 +49,15 @@ export function PreviewLoading({ message }: { message: string }) {
   );
 }
 
+export function PreviewHtml({ html }: { html: string }) {
+  return (
+    <Frame url="your-site.com">
+      {/* Empty sandbox: no scripts, no same-origin access, no forms. */}
+      <iframe title="דמו שנוצר ב-AI" sandbox="" srcDoc={html} className="fade-up block h-[600px] w-full bg-white" />
+    </Frame>
+  );
+}
+
 const tileGradients = [
   "linear-gradient(135deg,#f59e0b,#b45309)",
   "linear-gradient(135deg,#6366f1,#1e1b4b)",

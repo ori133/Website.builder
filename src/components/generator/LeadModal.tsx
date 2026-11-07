@@ -46,7 +46,7 @@ export default function LeadModal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
-          message: `בקשה מהמחולל: "${site.prompt.slice(0, 1500)}" (תבנית: ${site.template.label})`,
+          message: `בקשה מהמחולל: "${site.prompt.slice(0, 1500)}" ${site.html ? "(נוצר ע״י Claude)" : `(תבנית: ${site.template.label})`}`,
         }),
       });
       if (res.ok) {

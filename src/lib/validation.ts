@@ -12,4 +12,8 @@ export const contactSchema = z.object({
   message: z.string().trim().min(10, "ההודעה קצרה מדי (לפחות 10 תווים)").max(2000, "ההודעה ארוכה מדי"),
 });
 
+export const generateSchema = z.object({
+  prompt: z.string().trim().min(3).max(500),
+});
+
 export type ContactInput = z.infer<typeof contactSchema>;
